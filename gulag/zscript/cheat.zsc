@@ -1,0 +1,7 @@
+class GulagCheatManager : EventHandler
+{
+    override void NetworkProcess(ConsoleEvent e)
+    {
+        
+    }
+}

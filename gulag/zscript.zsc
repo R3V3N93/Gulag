@@ -1,0 +1,8 @@
+version "4.13.0"
+
+#include "zscript/player.zsc"
+#include "zscript/HUD.zsc"
+#include "zscript/cheat.zsc"
+#include "zscript/global.zsc"
+#include "zscript/scene.zsc"
+#include "zscript/handler.zsc"

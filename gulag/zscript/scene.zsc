@@ -1,0 +1,13 @@
+class GulagScene : Actor
+{
+    GulagHandler game;
+    override void PostBeginPlay()
+    {
+        game = global.globalHandler();
+    }
+    States
+    {
+        Spawn:
+            TNT1 A 0;
+    }
+}

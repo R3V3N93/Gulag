@@ -1,0 +1,10 @@
+class GulagHandler : EventHandler
+{
+    
+    override void OnRegister()
+    {
+        if(!multiplayer)
+            self.Destroy();
+    }
+}
+

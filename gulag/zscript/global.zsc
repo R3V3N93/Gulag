@@ -1,0 +1,8 @@
+struct global {
+
+static GulagHandler globalHandler()
+{
+    return GulagHandler(EventHandler.Find("GulagHandler"));
+}
+
+}
