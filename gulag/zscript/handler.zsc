@@ -1,10 +1,29 @@
 class GulagHandler : EventHandler
 {
+    int gamestate;
     
+    enum GULAG_GAMESTATE
+    {
+        GULAG_WAITINGFORPLAYERS,
+        GULAG_COUNTDOWN,
+        GULAG_MATCHINPROGRESS,
+        GULAG_MATCHOVER,
+    };
+
+    void setGameState(GULAG_GAMESTATE what)
+    {
+        self.gamestate = what;
+    }
+
     override void OnRegister()
     {
         if(!multiplayer)
             self.Destroy();
+    }
+
+    override void WorldLoaded(WorldEvent e)
+    {
+        actor.Spawn("GulagScene", (0,0,0));
     }
 }
 

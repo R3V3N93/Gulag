@@ -8,6 +8,6 @@ class GulagScene : Actor
     States
     {
         Spawn:
-            TNT1 A 0;
+        WaitingForPlayers
     }
 }
