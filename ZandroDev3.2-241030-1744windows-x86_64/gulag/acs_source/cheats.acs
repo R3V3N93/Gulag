@@ -6,4 +6,18 @@ Script "GulagRestart" (void) NET
     ResetMap();
 }
 
+Script "ForceReady" (int pnum) NET
+{
+    if(pready[pnum] == false)
+    {
+        LogDebug(__SCRIPT__ + " : Forced Player \ck" + str(pnum) + " Ready");
+        pready[pnum] = true;
+    }
+    else
+    {
+        LogDebug(__SCRIPT__ + " : Forced Player \ck" + str(pnum) + " Unready");
+        pready[pnum] = false;
+    }
+}
+
 }

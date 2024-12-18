@@ -1,6 +1,7 @@
 strict namespace{
 
 bool pready[2] = {false, false};
+int score[2] = {0, 0};
 
 Script "PlayerReady" ENTER
 {   
@@ -21,7 +22,6 @@ Script "PlayerReady" ENTER
         }
         delay(1);
     }
-    terminate;
 }
 
 }
