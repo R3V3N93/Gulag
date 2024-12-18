@@ -3,14 +3,33 @@ strict namespace{
 bool pready[2] = {false, false};
 int score[2] = {0, 0};
 
+struct vector3_T
+{
+    fixed x;
+    fixed y;
+    fixed z;
+};
+
+vector3_T? spawnLoc[2];
+
 void giveWeapons()
 {
-    GiveInventory("Chaingun");
-    GiveInventory("Pistol");
+    GiveInventory("Chaingun", 1);
+    GiveInventory("Pistol", 1);
+}
+
+void scorePlayer(int pnum)
+{
+    LogDebug(__FUNCTION__ + " : Player \ck" + str(pnum) + " Scored!");
+    score[pnum]++;
 }
 
 Script "PlayerReady" ENTER
 {   
+    spawnLoc[PlayerNumber()].x = GetActorX(0);
+    spawnLoc[PlayerNumber()].y = GetActorY(0);
+    spawnLoc[PlayerNumber()].z = GetActorZ(0);
+    
     ClearInventory();
     giveWeapons();
     while(gamestate == GULAG_WAITING)

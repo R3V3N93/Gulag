@@ -15,6 +15,14 @@ strict namespace{
 
 int round = 0;
 
+void prepBuff(bool set)
+{
+    LogDebug(__FUNCTION__ + " : Bros are \ck" + (set == true ? "buffed omgggg" : "weak mfs rn"));
+    int on = (set == true ? 1 : 0);
+    SetPlayerProperty(1, on, PROP_INVULNERABILITY);
+    SetPlayerProperty(1, on, PROP_FROZEN);
+}
+
 Script 1 OPEN
 {
     if(PlayerCount() < 2)
@@ -22,6 +30,12 @@ Script 1 OPEN
         LogError("The game is not an online game!");
         terminate;
     }
+
+    prepBuff(true);
+
+    //
+    // Waiting
+    //
 
     setGameState(GULAG_WAITING);
     while(gamestate == GULAG_WAITING)
@@ -35,8 +49,13 @@ Script 1 OPEN
     {
         round++;
         if(round > 3)
-            break;
-        
+            break; 
+
+        //
+        // Countdown
+        //
+
+        // Revives the dead player
         for(int i = 0; i <= 1; i++)
         {
             if(PlayerIsDeadSpectator(i))
@@ -45,19 +64,17 @@ Script 1 OPEN
                 SetDeadSpectator(i, false);
             }
         }
-
-        SetPlayerProperty(1, PROP_GODMODE2, 1);
-        SetPlayerProperty(1, PROP_FROZEN, 1);
-
+        
         setGameState(GULAG_COUNTDOWN);
         // countdown ui
         delay(5 * 35);
+
+        //
+        // In progress
+        //
         
         setGameState(GULAG_INPROGRESS);
-        
-        SetPlayerProperty(1, PROP_GODMODE2, 0);
-        SetPlayerProperty(1, PROP_FROZEN, 0);
-        
+        prepBuff(false);
         int flagtimer = 0;
         while(gamestate == GULAG_INPROGRESS)
         {
@@ -74,6 +91,10 @@ Script 1 OPEN
         delay(5*35);
     }       
 
+    //
+    // Post game
+    //
+
     int winner = (score[0] > score[1] ? 0 : 1);
 
     // A player won! msg
@@ -83,12 +104,12 @@ Script 1 OPEN
     ResetMap();
 }
 
-Script "Kill" KILL
+Script "Death" DEATH
 {
     if(gamestate == GULAG_INPROGRESS)
     {
-        LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c- achieved a frag");
-        score[PlayerNumber()]++;
+        LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c- is dead, not big surprise");
+        scorePlayer((PlayerNumber() == 0 ? 1 : 0));
         setGameState(GULAG_MATCHOVER);
     }
 }
