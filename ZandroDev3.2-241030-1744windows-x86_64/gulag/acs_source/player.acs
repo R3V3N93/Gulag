@@ -12,6 +12,32 @@ struct vector3_T
 
 vector3_T? spawnLoc[2];
 
+internal enum { CONST_PLAYER_TID = 99900 };
+
+function bool CheckPlayerNumber(int pnum, str func)
+{
+    // Checks if pnum is valid playernumber
+    if(pnum < 0 || pnum >= MAX_PLAYERS)
+    {
+        LogError(__FUNCTION__ + " : Called from " + func + " : pnum " + str(pnum) + " is not a valid playernumber! Returning false.");
+        return false;
+    }
+    return true;
+}
+
+function int GetPlayerTid(int pnum)
+{   
+    if(!CheckPlayerNumber(pnum, __FUNCTION__))
+        return -1;
+
+    return pnum + CONST_PLAYER_TID;
+}
+
+function int GetPlayerNumberFromTid(int tid)
+{   
+    return tid - CONST_PLAYER_TID;
+}
+
 void giveWeapons()
 {
     GiveInventory("Chaingun", 1);
@@ -29,7 +55,7 @@ Script "PlayerReady" ENTER
     spawnLoc[PlayerNumber()].x = GetActorX(0);
     spawnLoc[PlayerNumber()].y = GetActorY(0);
     spawnLoc[PlayerNumber()].z = GetActorZ(0);
-    
+    Thing_ChangeTID(0, GetPlayerTid(PlayerNumber()));
     ClearInventory();
     giveWeapons();
     while(gamestate == GULAG_WAITING)
