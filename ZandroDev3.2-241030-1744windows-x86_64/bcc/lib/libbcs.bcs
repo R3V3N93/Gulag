@@ -1,0 +1,483 @@
+strict namespace bcs {
+
+#if 1
+#ifndef PTR_SPC
+#define PTR_SPC
+#ifndef HEAP_SIZE
+#define HEAP_SIZE 65536 // around 250KB
+#endif
+#else
+#define __LIBBCS_NO_LOCAL_HEAP
+#endif
+
+#define _LIBBCS_REV "0100-alpha-2"
+#endif
+
+special -44:__libbcs_CallACS(str;raw,raw,raw,raw):int;
+
+#ifndef __LIBBCS_NO_LOCAL_HEAP
+internal raw _Heap[HEAP_SIZE];
+
+internal enum
+{
+    HEAP_START = (HEAP_SIZE - 1) + (int)_Heap // Don't touch this.
+};
+#else
+internal enum
+{
+	HEAP_START = 0xFFFEFFFF
+};
+#endif
+
+internal struct AllocBlock
+{
+    struct AllocBlock PTR_SPC* next;
+    int size;
+    bool used;
+};
+
+internal struct HeapHead
+{
+    bool init;
+#ifdef __LIBBCS_NO_LOCAL_HEAP
+    int allocTime; // only needed for safe-malloc compat, which isn't an issue with a local heap
+#endif
+    struct AllocBlock PTR_SPC* tail, lastFreed;
+};
+
+// Main memory allocation function. Returns a pointer to a buffer of the requested size.
+internal int malloc (int size)
+{
+    struct HeapHead PTR_SPC* head;
+    struct AllocBlock PTR_SPC* block;
+
+    head = (HEAP_START - lengthof(head));
+
+    if(!head.init)
+    {
+        head.init = true;
+
+        block = ((int)head - ((size + lengthof(block)) - 1));
+
+        block.used = true;
+        block.size = size;
+        block.next = 0;
+
+        head.tail = (int)block;
+
+        return (int)block + lengthof(block);
+    }
+
+    block = head.lastFreed;
+
+    if( block && (block.size >= size) )
+    {
+        head.lastFreed = 0;
+        block.used = true;
+        return (int)block + lengthof(block);
+    }
+
+    block = head.tail;
+
+    do
+    {
+        if(block.used || (size > block.size))
+        {
+            block = block.next;
+            continue;
+        }
+
+        if((block.size - size) >= (lengthof(block) + 4))
+        {
+            struct AllocBlock PTR_SPC* splitBlock = (int)block + size + lengthof(block);
+
+            splitBlock.used = false;
+            splitBlock.size = block.size - lengthof(block) - size;
+            splitBlock.next = block.next;
+
+            block.next = splitBlock;
+            block.size = size;
+        }
+
+        block.used = true;
+
+        return (int)block + lengthof(block);
+
+    } while(block);
+
+    // No acceptable blocks found, so let's "grow" the heap.
+    block = ((int)head.tail - (lengthof(block) + size));
+
+    block.used = true;
+    block.size = size;
+    block.next = head.tail;
+
+    head.tail = block;
+
+    #ifndef __LIBBCS_NO_LOCAL_HEAP
+    if((int)block < (int)_Heap)
+	#else
+	// This check is a little weird since we start our heap in the negatives.
+	if( ((int)block > HEAP_START) && ((int)block < 0) )
+	#endif
+    {
+		#ifndef __LIBBCS_NO_LOCAL_HEAP
+		Log(s:"\cglibbcs malloc ERROR: heap overflow! HEAP_SIZE is currently ", i:HEAP_SIZE);
+		#else
+		Log(s:"\cglibbcs malloc ERROR: heap overflow!");
+		#endif
+		return 0;
+	}
+
+    return (int)block + lengthof(block);
+}
+
+// Frees the memory so it is usable by future calls to smMalloc.
+internal void free (int ptr)
+{
+    if(!ptr)
+        return;
+
+    struct HeapHead PTR_SPC* head;
+    struct AllocBlock PTR_SPC* block, nextBlock;
+
+    block = ptr - lengthof(block);
+    nextBlock = block.next;
+
+    // Should merge blocks here.
+    if( (nextBlock) && (!nextBlock.used) )
+    {
+        block.size += nextBlock.size + lengthof(block);
+        block.next = nextBlock.next;
+    }
+
+    block.used = false;
+
+    head = (HEAP_START - lengthof(head));
+    head.lastFreed = block;
+}
+
+// Creates a new bigger buffer if needed, copying the contents of the original passed in.
+internal int realloc (int oldPtr, int size)
+{
+    if(!oldPtr)
+    {
+        if(!size)
+            return 0;
+        return malloc(size);
+    }
+
+    if(!size)
+    {
+        free(oldPtr);
+        return 0;
+    }
+
+    struct AllocBlock PTR_SPC* oldBlock;
+
+    oldBlock = oldPtr - lengthof(oldBlock);
+
+    if(oldBlock.size >= size)
+        return oldPtr;
+
+    int ptr = malloc(size);
+	Log(s:"realloc new ptr is ", i:ptr);
+
+    int[] PTR_SPC* oldBuf = oldPtr;
+    int[] PTR_SPC* buf = ptr;
+
+    for(int i = oldBlock.size; i > 0; i--)
+        buf[i] = oldBuf[i];
+
+    free(oldPtr);
+    return ptr;
+}
+
+Script _LIBBCS_REV "-alloca" (int ptr)
+{
+	if(ptr)
+	{
+		Delay(1);
+		free(ptr);
+	}
+}
+
+internal int alloca (int size)
+{
+	int ptr = malloc(size);
+
+	__libbcs_CallACS(_LIBBCS_REV "-alloca", ptr);
+
+	return ptr;
+}
+
+// Debug print function.
+void allocDump ()
+{
+    struct HeapHead PTR_SPC* head;
+    struct AllocBlock PTR_SPC* block;
+
+    head = (HEAP_START - lengthof(head));
+    block = head.tail;
+
+    Print(s:"=libbcs allocDump=");
+	while(block)
+	{
+        Print(i:(int)block, s:" - next: ", i:(int)block.next, s:", size: ", x:block.size, s:", used: ", i:(int)block.used & (1<<0), s:", autBlock: ", i:(int)block.used & (1<<2));
+
+        block = block.next;
+	}
+}
+
+// BCC array references are fat pointers:
+// first word is an offset pointing to the first array element
+// second word is an offset pointing to the length of the array
+// inline ASM is of course required to change the length offset
+internal void[] PTR_SPC? makeArrPtr (int ptr, int len)
+{
+	void[] PTR_SPC? arr;
+
+	// utterly disgusting
+	struct
+	{
+		raw a;
+	} PTR_SPC* h = ptr;
+	h.a = len;
+
+	>pushscriptvar 0
+	>assignscriptvar 2 // Write pointer to array.
+	>incscriptvar 2 // Increment to point to the first element.
+	>pushscriptvar 0
+	>assignscriptvar 3 // Write pointer to array length.
+
+    return arr;
+}
+
+internal void[] PTR_SPC? arrNew (int len)
+{
+    int ptr = malloc(len + 1);
+
+    return makeArrPtr(ptr, len);
+}
+
+internal void arrDelete (void[] PTR_SPC? arr)
+{
+    free((int)arr - 1);
+}
+
+internal void[] PTR_SPC? arrResize (void[] PTR_SPC? arr, int newSize)
+{
+    int newPtr = realloc((int)arr - 1, newSize + 1);
+
+    if(!newPtr)
+    {
+        Log(s:"\ckDynarray WARNING: resize to ", i:newSize, s:" FAILED!");
+        return arr;
+    }
+
+    return makeArrPtr(newPtr, newSize);
+}
+
+#if 1
+	#define __printf_parms str string, raw i1 = 0, raw i2 = 0, raw i3 = 0, raw i4 = 0, raw i5 = 0, \
+							raw i6 = 0, raw i7 = 0, raw i8 = 0, raw i9 = 0, raw i10 = 0, \
+							raw i11 = 0, raw i12 = 0, raw i13 = 0, raw i14 = 0, \
+							raw i15 = 0, raw i16 = 0
+
+	#define __printf_args string, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16
+
+#define BCSFMT_ACCURATE_FIXED
+
+#ifdef BCSFMT_ACCURATE_FIXED
+
+internal void PrintFixedPrec (fixed n)
+{
+	str string;
+	int integerPart = int(n);
+	int fractPart = ((((int)n) & 65535) * 10000) / 65536;
+
+	buildmsg(string = StrParam())
+	{
+		Append(i:integerPart, c:'.');
+
+		if(fractPart < 1)
+		{
+			Append(s:"0000");
+			goto done;
+		}
+		else if(fractPart < 10)
+			Append(s:"000");
+		else if(fractPart < 100)
+			Append(s:"00");
+		else if(fractPart < 1000)
+			Append(s:"0");
+
+		Append(i:fractPart);
+
+		done:
+	}
+
+	>pushscriptvar 1
+	>printstring
+}
+
+#endif
+#endif
+
+internal void __putc (int c)
+{
+	>pushscriptvar 0
+	>printcharacter
+}
+
+internal void PrintInt (raw i)
+{
+	>pushscriptvar 0
+	>printnumber
+}
+
+internal void PrintFixed (raw i)
+{
+	>pushscriptvar 0
+	>PrintFixed
+}
+
+#if 1
+	#define PUSH_PARAMS_ARRAY >pushscriptarray 0
+	#define PUSH_PARAMNUM >pushscriptvar 17
+#endif
+
+internal void __printf (__printf_parms)
+{
+	raw params[] = {i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16};
+
+	int paramNum;
+
+	int len = strlen(string);
+
+	int ch;
+
+	for(int i = 0; i < len; i++)
+	{
+		ch = string[i];
+
+		if(ch != '%')
+		{
+			__putc(ch);
+		}
+		else
+		{
+			switch(string[++i])
+			{
+			case 'i':
+			case 'd':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printnumber
+				paramNum++;
+			break;
+
+			case 'c':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printcharacter
+				paramNum++;
+			break;
+
+			case 'f':
+			#ifdef BCSFMT_ACCURATE_FIXED
+				PrintFixedPrec(params[paramNum++]);
+			#else
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printfixed
+				paramNum++;
+			#endif
+			break;
+
+			case 's':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printstring
+				paramNum++;
+			break;
+
+			case 'n':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printname
+				paramNum++;
+			break;
+
+			case 'x':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printhex
+				paramNum++;
+			break;
+
+			case 'b':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printbinary
+				paramNum++;
+			break;
+
+			case 'k':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printbind
+				paramNum++;
+			break;
+
+			case 'l':
+				PUSH_PARAMNUM
+				PUSH_PARAMS_ARRAY
+				>printlocalized
+				paramNum++;
+			break;
+
+			case '%':
+				__putc('%');
+			break;
+
+			default:
+				Log(s:"unexpected flag identifier ", c:string[i]);
+			return;
+			}
+		}
+	}
+}
+
+void printf (__printf_parms)
+{
+	buildmsg(Print())
+		{__printf(__printf_args);}
+}
+
+void printboldf (__printf_parms)
+{
+	buildmsg(PrintBold())
+		{__printf(__printf_args);}
+}
+
+void logf (__printf_parms)
+{
+	buildmsg(Log())
+		{__printf(__printf_args);}
+}
+
+str strformat (__printf_parms)
+{
+	str retval;
+
+	buildmsg(retval = StrParam())
+		{__printf(__printf_args);}
+
+	return retval;
+}
+
+#undef __printf_parms
+#undef __printf_args
+
+}

@@ -8,6 +8,9 @@ class GulagScene : Actor
     States
     {
         Spawn:
-        WaitingForPlayers
+        WaitingForPlayers:
+        CountDown:
+        InProgress:
+        MatchOver:
     }
 }

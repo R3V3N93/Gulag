@@ -1,0 +1,9 @@
+Strict namespace{
+
+Script "GulagRestart" (void) NET
+{
+    LogDebug(__SCRIPT__ + " : Restarting the game..");
+    ResetMap();
+}
+
+}

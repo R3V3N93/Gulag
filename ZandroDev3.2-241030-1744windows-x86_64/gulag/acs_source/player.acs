@@ -1,0 +1,27 @@
+strict namespace{
+
+bool pready[2] = {false, false};
+
+Script "PlayerReady" ENTER
+{   
+    while(gamestate == GULAG_WAITING)
+    {
+        if(KeyPressed(BT_JUMP))
+        {
+            if(pready[PlayerNumber()] == false)
+            {
+                LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + " Ready");
+                pready[PlayerNumber()] = true;
+            }
+            else
+            {
+                LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + " Unready");
+                pready[PlayerNumber()] = false;
+            }
+        }
+        delay(1);
+    }
+    terminate;
+}
+
+}

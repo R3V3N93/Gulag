@@ -1,0 +1,543 @@
+// ----------------------------------------
+// THIS FILE IS AUTO-GENERATED.
+// Any modifications may be overwritten.
+// ----------------------------------------
+
+// This file has been automatically generated to maintain data/code consistency.
+// Manual changes could be lost during the next regeneration. It is advised not to modify this file directly.
+
+// Purpose:
+// This file serves as the base ACS file for the given library, exposing all public scripts/functions that you are allowed to use.
+// This file is generated automatically to ensure accuracy and avoid mistakes with missing/unimplemented scripts/functions.
+
+// Usage Guidelines:
+// - DO NOT manually edit this file unless you fully understand its purpose and structure.
+// - DO NOT manually expose public scripts/functions. There is no guarantee these scripts/functions persist in the next version.
+// - If changes are necessary, request modification of the source code and regenerate the file.
+// - Reach out to the developer for assistance with any concerns.
+
+#library "bcsutils"
+
+/* Libdefines */
+
+
+/* Libdefines, generated from enums */
+
+#libdefine ACSUTILS_VERSION_MAJOR  1
+#libdefine ACSUTILS_VERSION_MINOR  8
+#libdefine ACSUTILS_VERSION_PATCH  2
+#libdefine HUDTIC 0.03
+#libdefine HUD_STAYTIME_FOREVER (-1)
+#libdefine HUD_BLENDSTYLE_NORMAL  0
+#libdefine HUD_BLENDSTYLE_ADDITIVE  1
+#libdefine HUD_ALIGN_CENTER  0
+#libdefine HUD_ALIGN_LEFT  1
+#libdefine HUD_ALIGN_RIGHT  2
+#libdefine HUD_ALIGN_TOP  1
+#libdefine HUD_ALIGN_BOTTOM  2
+#libdefine HUD_PROJECTION_AUTO  0
+#libdefine HUD_PROJECTION_3D  1
+#libdefine HUD_PROJECTION_YSHEARING  2
+#libdefine FIXED_MAX (0x7fffffff)
+#libdefine FIXED_MIN (0x80000000)
+#libdefine USHORT_MAX  65535
+#libdefine SHORT_MAX  32767
+#libdefine SHORT_MIN  -32768
+#libdefine UBYTE_MAX  255
+#libdefine SBYTE_MAX  127
+#libdefine SBYTE_MIN  -128
+#libdefine PI 3.1415926535897932384626433832795
+#libdefine TAU 6.2831853071795864769252867665590
+#libdefine SQRT_2 1.41421356237
+#libdefine MATH_E 2.7182818284590452353602874713526624977572470937
+#libdefine LOG2_E 1.44269504089
+#libdefine LOG2_10 3.32192809489
+#libdefine COLORCODE  28
+#libdefine MAX_PLAYERS  64
+#libdefine MAX_PLAYERS_ZDOOM  8
+#libdefine TEAM_NONE  255
+#libdefine PARSENUMBER_SUCCESS  0
+#libdefine PARSENUMBER_OVERFLOW  1
+#libdefine PARSENUMBER_BADFORMAT  2
+#libdefine PORT_ZDOOM  1
+#libdefine PORT_GZDOOM  2
+#libdefine PORT_ZANDRONUM  3
+#libdefine ASPECT_4_3 ((4.0) / 3)
+#libdefine ASPECT_5_4 1.25
+#libdefine ASPECT_16_9 ((16.0) / 9)
+#libdefine ASPECT_16_10 1.6
+#libdefine ASPECT_17_10 1.7
+#libdefine HUD_CAMERAACTOR_NOPOSITION  1
+#libdefine HUD_CAMERAACTOR_NOPREDICTION  2
+#libdefine HUD_CAMERAACTOR_NODIRECTION  4
+#libdefine HUD_CAMERAACTOR_NOVIEWHEIGHT  8
+#libdefine CAMERA_BASE_DISTANCE  128
+
+/* Public methods */
+
+function str ACSUtilsVersion(void) {}
+function int min(int a, int b) {}
+function int max(int a, int b) {}
+function int clamp(int x, int a, int b) {}
+function int sgn(int x) {}
+function int abs(int x) {}
+function int middle(int x, int y, int z) {}
+function int cmp(int a, int b) {}
+function int mod(int a, int b) {}
+function int cond(bool x, int whentrue, int whenfalse) {}
+function int condTrue(int x, int whentrue) {}
+function int condFalse(int x, int whenfalse) {}
+function int fract(int x) {}
+function int trunc(int x) {}
+function int customFloor(int x) {}
+function int customCeil(int x) {}
+function int customRound(int x) {}
+function int itrunc(int x) {}
+function int ifloor(int x) {}
+function int iceil(int x) {}
+function int iround(int x) {}
+function int AngleDiff(int a, int b) {}
+function int ipow(int x, int y) {}
+function int fpow(int x_, int y_) {}
+function int lerp(int a, int b, int alpha) {}
+function int gcf(int a, int b) {}
+function int IntDiv(int a_, int b_) {}
+function void swap(int a, int b) {}
+function int getbit(int x, int n) {}
+function int clrbit(int p, int n) {}
+function int setbit(int p, int n) {}
+function int tglbit(int p, int n) {}
+function bool notflag(int flags, int flag) {}
+function bool randbool(void) {}
+function int randint(void) {}
+function int randsign(void) {}
+function int RandomPick2(int v0, int v1) {}
+function int RandomPick3(int v0, int v1, int v2) {}
+function int RandomPick4(int v0, int v1, int v2, int v3) {}
+function int RandomPick5(int v0, int v1, int v2, int v3, int v4) {}
+function int RandomPick6(int v0, int v1, int v2, int v3, int v4, int v5) {}
+function int RandomPick7(int v0, int v1, int v2, int v3, int v4, int v5, int v6) {}
+function int RandomPick8(int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7) {}
+function int npo2(int v) {}
+function int getNumDigits(int base, int number) {}
+function int flag2index(int x) {}
+function int log2(int x_) {}
+function int ilog2(int x_) {}
+function int ln(int x) {}
+function int iln(int x) {}
+function int log10(int x) {}
+function int ilog10(int x) {}
+function int logb(int x, int base) {}
+function int ilogb(int x, int base) {}
+function int tan(int x) {}
+function int cot(int x) {}
+function int sec(int x) {}
+function int cosec(int x) {}
+function int atan(int x) {}
+function int asin(int x) {}
+function int acos(int x) {}
+function int acot(int x) {}
+function int asec(int x) {}
+function int acosec(int x) {}
+function void RotateVector(int x, int y, int angle) {}
+function void RotateVectorCS(int x, int y, int c, int s) {}
+function void RotatePoint(int x, int y, int originX, int originY, int angle) {}
+function void VectorToAngles(int x, int y, int z) {}
+function void AnglesToVector(int angle, int pitch) {}
+function int VectorLength3D(int x, int y, int z) {}
+function int SqVectorLength(int x, int y) {}
+function int SqVectorLength3D(int x, int y, int z) {}
+function int dot2(int x1, int y1, int x2, int y2) {}
+function int dot3(int x1, int y1, int z1, int x2, int y2, int z2) {}
+function void normalize2d(int x, int y) {}
+function void normalize3d(int x, int y, int z) {}
+function bool isalnum(int c) {}
+function bool isalpha(int c) {}
+function bool isblank(int c) {}
+function bool iscntrl(int c) {}
+function bool isdigit(int c) {}
+function bool isgraph(int c) {}
+function bool islower(int c) {}
+function bool isprint(int c) {}
+function bool ispunct(int c) {}
+function bool isspace(int c) {}
+function bool isupper(int c) {}
+function bool isxdigit(int c) {}
+function bool isascii(int c) {}
+function int toupper(int c) {}
+function int tolower(int c) {}
+function bool StrIsAlNum(str s) {}
+function bool StrIsAlpha(str s) {}
+function bool StrIsBlank(str s) {}
+function bool StrIsCntrl(str s) {}
+function bool StrIsDigit(str s) {}
+function bool StrIsGraph(str s) {}
+function bool StrIsLower(str s) {}
+function bool StrIsPrint(str s) {}
+function bool StrIsSpace(str s) {}
+function bool StrIsUpper(str s) {}
+function bool StrIsXDigit(str s) {}
+function bool StrIsAscii(str s) {}
+function str StrToLower(str s) {}
+function str StrToUpper(str s) {}
+function bool StrIsEmpty(str s) {}
+function str StrAdd(str a, str b) {}
+function str StrAddInt(str a, int b) {}
+function str StrAddChar(str a, int b) {}
+function str StrAddFixed(str a, int b) {}
+function bool StrEquals(str a, str b) {}
+function bool StrIEquals(str a, str b) {}
+function bool StrEqualsAt(str s, int where, str what) {}
+function bool StrIEqualsAt(str s, int where, str what) {}
+function bool StrStartsWith(str s, str sub) {}
+function bool StrStartsWithI(str s, str sub) {}
+function bool StrEndsWith(str s, str what) {}
+function bool StrEndsWithI(str s, str what) {}
+function int StrFind(str s, str what) {}
+function int StrFindI(str s, str what) {}
+function int StrRFind(str s, str what) {}
+function int StrRFindI(str s, str what) {}
+function int StrFindFrom(str s, str what, int start) {}
+function int StrFindFromI(str s, str what, int start) {}
+function int StrRFindFrom(str s, str what, int start) {}
+function int StrRFindFromI(str s, str what, int start) {}
+function str StrRemove(str s, str what) {}
+function str StrRemoveI(str s, str what) {}
+function str StrRemoveFirst(str s, str what) {}
+function str StrRemoveFirstI(str s, str what) {}
+function str StrRemoveLast(str s, str what) {}
+function str StrRemoveLastI(str s, str what) {}
+function str StrRemoveFirstFrom(str s, str what, int start) {}
+function str StrRemoveFirstFromI(str s, str what, int start) {}
+function str StrRemoveLastFrom(str s, str what, int start) {}
+function str StrRemoveLastFromI(str s, str what, int start) {}
+function str StrReplace(str s, str what, str with) {}
+function str StrReplaceI(str s, str what, str with) {}
+function str StrReplaceFirst(str s, str what, str with) {}
+function str StrReplaceFirstI(str s, str what, str with) {}
+function str StrReplaceLast(str s, str what, str with) {}
+function str StrReplaceLastI(str s, str what, str with) {}
+function str StrReplaceFirstFrom(str s, str what, str with, int start) {}
+function str StrReplaceFirstFromI(str s, str what, str with, int start) {}
+function str StrReplaceLastFrom(str s, str what, str with, int start) {}
+function str StrReplaceLastFromI(str s, str what, str with, int start) {}
+function str LeftPad(str s, int c, int size) {}
+function str RightPad(str s, int c, int size) {}
+function str StrCapitalize(str s) {}
+function bool StrContains(str s, str what) {}
+function bool StrContainsI(str s, str what) {}
+function str StrCut(str s, int start, int length) {}
+function str StrCutRange(str s, int start, int end) {}
+function str StrInsert(str s, int where, str what) {}
+function str StrSlice(str s, int start, int end) {}
+function void StrSplit(str s, str separator) {}
+function void StrSplitI(str s, str separator) {}
+function str StrRightFrom(str s, int from) {}
+function str StrRepeat(str s, int n) {}
+function str StrReverse(str s) {}
+function bool IsColorCodeChar(int c) {}
+function int SkipColorCodeAt(str s, int i) {}
+function str GetColorCodeAt(str s, int i) {}
+function bool HasColorCodes(str s) {}
+function str StripColorCodes(str s) {}
+function void GiveMaxInventory(str item) {}
+function void GiveMaxActorInventory(int tid, str item) {}
+function void TakeMaxInventory(str item) {}
+function void TakeMaxActorInventory(int tid, str item) {}
+function void SetInventory(str item, int amount) {}
+function void SetActorInventory(int tid, str item, int amount) {}
+function void ToggleInventory(str item) {}
+function void ToggleActorInventory(int tid, str item) {}
+function int a_GetCVarFixed(str name) {}
+function int a_GetUserCVarFixed(int player, str name) {}
+function bool StatusBarVisible(void) {}
+function void ClearHudMessage(int id) {}
+function void ClearHudMessageBold(int id) {}
+function str ActivatorName(void) {}
+function str GetActorName(int tid) {}
+function bool IsAlive(void) {}
+function bool ActorIsAlive(int tid) {}
+function bool ActorExists(int tid) {}
+function int ActorDistance(int tid1, int tid2) {}
+function int ActorDistance2D(int tid1, int tid2) {}
+function int GetActorVelocity(int tid) {}
+function int GetActorXYVelocity(int tid) {}
+function int GetActorVelocityXY(int tid) {}
+function bool HasRoomFor(str classname, int x, int y, int z) {}
+function void LookAtPoint(int tid, int x, int y, int z) {}
+function void LookAt(int tid, int target) {}
+function str ACSUtils_ChangeFlagName(str flag, bool value) {}
+function void ChangeFlag(str flag, bool value) {}
+function void ChangeActorFlag(int tid, str flag, bool value) {}
+function int SyncSpeed(int newdistance, int syncdistance, int syncspd) {}
+function int PackBytes(int a, int b, int c, int d) {}
+function int UnpackByte1(int x) {}
+function int UnpackByte2(int x) {}
+function int UnpackByte3(int x) {}
+function int UnpackByte4(int x) {}
+function int PackShorts(int a, int b) {}
+function int UnpackShort1(int x) {}
+function int UnpackShort2(int x) {}
+function bool KeyBound(str key) {}
+function bool KeyUp(int key) {}
+function bool KeyUpAny(int key) {}
+function bool PlayerKeyUp(int player, int key) {}
+function bool PlayerKeyUpAny(int player, int key) {}
+function bool KeyDown(int key) {}
+function bool KeyDownAny(int key) {}
+function bool PlayerKeyDown(int player, int key) {}
+function bool PlayerKeyDownAny(int player, int key) {}
+function bool KeyPressed(int key) {}
+function bool KeyPressedAny(int key) {}
+function bool PlayerKeyPressed(int player, int key) {}
+function bool PlayerKeyPressedAny(int player, int key) {}
+function bool KeyReleased(int key) {}
+function bool KeyReleasedAny(int key) {}
+function bool PlayerKeyReleased(int player, int key) {}
+function bool PlayerKeyReleasedAny(int player, int key) {}
+function bool KeyToggled(int key) {}
+function bool KeyToggledAny(int key) {}
+function bool PlayerKeyToggled(int player, int key) {}
+function bool PlayerKeyToggledAny(int player, int key) {}
+function int deg2ang(int degrees) {}
+function int rad2ang(int radians) {}
+function int ang2deg(int angle) {}
+function int ang2rad(int angle) {}
+function int deg2rad(int degrees) {}
+function int rad2deg(int radians) {}
+function int ang2byte(int angle) {}
+function int byte2ang(int angle) {}
+function int GetGravityG(void) {}
+function void SetGravityG(int gravity) {}
+function int grav2accel(int grav) {}
+function int accel2grav(int accel) {}
+function int height2jumpz(int height, int gravity) {}
+function int jumpz2height(int jumpz, int gravity) {}
+function int ACSUtils_CheckRadix(int radix, str functionName) {}
+function void ACSUtils_ParseSign(str s, int i) {}
+function void ACSUtils_ParseBasePrefix(str s, int i) {}
+function int ACSUtils_ParseDigit(int c, int radix) {}
+function void ParseInt(str s, int radix) {}
+function void ParseFixed(str s, int radix) {}
+function int atoi(str s) {}
+function int atof(str s) {}
+function bool StrIsInt(str s) {}
+function bool StrIsFixed(str s) {}
+function int GetActorAccuracy(int tid) {}
+function void SetActorAccuracy(int tid, int Accuracy) {}
+function int GetActorAlpha(int tid) {}
+function void SetActorAlpha(int tid, int Alpha) {}
+function bool GetActorAmbush(int tid) {}
+function void SetActorAmbush(int tid, bool Ambush) {}
+function int GetActorAttackZOffset(int tid) {}
+function void SetActorAttackZOffset(int tid, int AttackZOffset) {}
+function bool GetActorChaseGoal(int tid) {}
+function void SetActorChaseGoal(int tid, bool ChaseGoal) {}
+function int GetActorDamage(int tid) {}
+function void SetActorDamage(int tid, int Damage) {}
+function int GetActorDamageFactor(int tid) {}
+function void SetActorDamageFactor(int tid, int DamageFactor) {}
+function int GetActorDamageMultiplier(int tid) {}
+function void SetActorDamageMultiplier(int tid, int DamageMultiplier) {}
+function bool GetActorDormant(int tid) {}
+function void SetActorDormant(int tid, bool Dormant) {}
+function bool GetActorDropped(int tid) {}
+function void SetActorDropped(int tid, bool Dropped) {}
+function int GetActorFriction(int tid) {}
+function void SetActorFriction(int tid, int Friction) {}
+function bool GetActorFriendly(int tid) {}
+function void SetActorFriendly(int tid, bool Friendly) {}
+function bool GetActorFrightened(int tid) {}
+function void SetActorFrightened(int tid, bool Frightened) {}
+function int GetActorGravity(int tid) {}
+function void SetActorGravity(int tid, int Gravity) {}
+function int GetActorHealth(int tid) {}
+function void SetActorHealth(int tid, int Health) {}
+function int GetActorHeight(int tid) {}
+function void SetActorHeight(int tid, int Height) {}
+function bool GetActorInvulnerable(int tid) {}
+function void SetActorInvulnerable(int tid, bool Invulnerable) {}
+function int GetActorJumpZ(int tid) {}
+function void SetActorJumpZ(int tid, int JumpZ) {}
+function int GetActorMass(int tid) {}
+function void SetActorMass(int tid, int Mass) {}
+function int GetActorMasterTID(int tid) {}
+function void SetActorMasterTID(int tid, int MasterTID) {}
+function int GetActorMaxDropOffHeight(int tid) {}
+function void SetActorMaxDropOffHeight(int tid, int MaxDropOffHeight) {}
+function int GetActorMaxStepHeight(int tid) {}
+function void SetActorMaxStepHeight(int tid, int MaxStepHeight) {}
+function int GetActorMeleeRange(int tid) {}
+function void SetActorMeleeRange(int tid, int MeleeRange) {}
+function bool GetActorNoTrigger(int tid) {}
+function void SetActorNoTrigger(int tid, bool NoTrigger) {}
+function bool GetActorNoTarget(int tid) {}
+function void SetActorNoTarget(int tid, bool NoTarget) {}
+function int GetActorRadius(int tid) {}
+function void SetActorRadius(int tid, int Radius) {}
+function int GetActorReactionTime(int tid) {}
+function void SetActorReactionTime(int tid, int ReactionTime) {}
+function int GetActorRenderStyle(int tid) {}
+function void SetActorRenderStyle(int tid, int RenderStyle) {}
+function int GetActorScaleX(int tid) {}
+function void SetActorScaleX(int tid, int ScaleX) {}
+function int GetActorScaleY(int tid) {}
+function void SetActorScaleY(int tid, int ScaleY) {}
+function int GetActorScore(int tid) {}
+function void SetActorScore(int tid, int Score) {}
+function int GetActorSpawnHealth(int tid) {}
+function void SetActorSpawnHealth(int tid, int SpawnHealth) {}
+function int GetActorSpeed(int tid) {}
+function void SetActorSpeed(int tid, int Speed) {}
+function int GetActorStamina(int tid) {}
+function void SetActorStamina(int tid, int Stamina) {}
+function int GetActorStencilColor(int tid) {}
+function void SetActorStencilColor(int tid, int StencilColor) {}
+function int GetActorTargetTID(int tid) {}
+function void SetActorTargetTID(int tid, int TargetTID) {}
+function int GetActorTracerTID(int tid) {}
+function void SetActorTracerTID(int tid, int TracerTID) {}
+function void SetActorViewHeight(int tid, int ViewHeight) {}
+function int GetActorWaterlevel(int tid) {}
+function void SetActorWaterlevel(int tid, int Waterlevel) {}
+function str GetActorDamageType(int tid) {}
+function void SetActorDamageType(int tid, str DamageType) {}
+function str GetActorNametag(int tid) {}
+function void SetActorNametag(int tid, str Nametag) {}
+function str GetActorSpecies(int tid) {}
+function void SetActorSpecies(int tid, str Species) {}
+function str GetActorActiveSound(int tid) {}
+function void SetActorActiveSound(int tid, str ActiveSound) {}
+function str GetActorAttackSound(int tid) {}
+function void SetActorAttackSound(int tid, str AttackSound) {}
+function str GetActorDeathSound(int tid) {}
+function void SetActorDeathSound(int tid, str DeathSound) {}
+function str GetActorPainSound(int tid) {}
+function void SetActorPainSound(int tid, str PainSound) {}
+function str GetActorSeeSound(int tid) {}
+function void SetActorSeeSound(int tid, str SeeSound) {}
+function bool IsPlayer(void) {}
+function int ActorPlayerNumber(int tid) {}
+function bool ActorIsPlayer(int tid) {}
+function str PlayerName(int player) {}
+function int GetPlayerTeam(int player) {}
+function int TeamPlayerCount(int team) {}
+function bool ConsolePlayerInGame(void) {}
+function str ConsolePlayerName(void) {}
+function int ConsolePlayerTeam(void) {}
+function bool SetActivatorToConsolePlayer(void) {}
+function bool SetActivatorToPlayer2(int player) {}
+function bool PlayerIsConnected(int player) {}
+function bool PlayerIsDeadSpectator(int player) {}
+function int BotCount(void) {}
+function int ClientCount(void) {}
+function int DeadSpectatorCount(void) {}
+function int SpectatorCount(void) {}
+function int PickRandomBot(void) {}
+function int PickRandomClient(void) {}
+function int PickRandomDeadSpectator(void) {}
+function int PickRandomPlayer(void) {}
+function int PickRandomSpectator(void) {}
+function int PickRandomTeamPlayer(int team) {}
+function int CursorX(void) {}
+function int CursorY(void) {}
+function int CursorDeltaX(void) {}
+function int CursorDeltaY(void) {}
+function int CursorMotionX(void) {}
+function int CursorMotionY(void) {}
+function void SetCursorSpeed(int speed) {}
+function void SetCursorSpeedX(int speed) {}
+function void SetCursorSpeedY(int speed) {}
+function void SetCursorPosition(int x, int y) {}
+function void CenterCursor(void) {}
+function void EnableCursorWrap(bool enable) {}
+function void EnableCursorWrapX(bool enable) {}
+function void EnableCursorWrapY(bool enable) {}
+function void ACSUtils_ClampCursor(void) {}
+function void SetCursorArea(int width, int height) {}
+function void UpdateCursor(void) {}
+function int IdentifySourcePort(void) {}
+function str GetPortName(void) {}
+function bool IsZandronum(void) {}
+function bool IsGZDoom(void) {}
+function bool IsServer(void) {}
+function bool IsClient(void) {}
+function bool IsServerOnly(void) {}
+function bool IsClientOnly(void) {}
+function bool IsOpenGL(void) {}
+function int GetAspectRatio(void) {}
+function int HudBorderXFor(int width) {}
+function int HudBorderYFor(int height) {}
+function int HudLeftFor(int width) {}
+function int HudX1For(int width) {}
+function int HudRightFor(int width) {}
+function int HudX2For(int width) {}
+function int HudTopFor(int height) {}
+function int HudY1For(int height) {}
+function int HudBottomFor(int height) {}
+function int HudY2For(int height) {}
+function void ShuffleArray(int begin, int end, str cb_swap) {}
+function void SyncVariable(int tid, int value) {}
+function int GetSyncVar(int tid) {}
+function int GetSyncVarDefault(int tid, int default_value) {}
+function void HudResetState(void) {}
+function void HudClearStateStack(void) {}
+function void HudPushState(void) {}
+function void HudPopState(void) {}
+function void HudSetCameraPosition(int x, int y, int z) {}
+function void HudSetCameraAngles(int angle, int pitch) {}
+function void HudSetCameraVector(int x, int y, int z) {}
+function void HudSetCameraActorAdvanced(int tid, int flags) {}
+function void HudSetCameraActor(int tid) {}
+function void HudSetPoint3D(int x, int y, int z) {}
+function void HudSet2DOffset(int x, int y) {}
+function void HudSetAutoDistanceScale(bool autoDistanceScale) {}
+function void HudSetProjectionMode(int mode) {}
+function void HudSetVirtualSize(int width, int height) {}
+function void HudUseDefaultSize(void) {}
+function void HudUseRealSize(void) {}
+function int HudBorderX(void) {}
+function int HudBorderY(void) {}
+function int HudLeft(void) {}
+function int HudX1(void) {}
+function int HudRight(void) {}
+function int HudX2(void) {}
+function int HudTop(void) {}
+function int HudY1(void) {}
+function int HudBottom(void) {}
+function int HudY2(void) {}
+function void HudSetExcludeStatusBar(bool exclude) {}
+function void HudSetPoint(int x, int y) {}
+function void HudSetScaleXY(int scaleX, int scaleY) {}
+function void HudSetScale(int scale) {}
+function void HudSetInvScale(int invScale) {}
+function void HudSetInvScaleXY(int invScaleX, int invScaleY) {}
+function void HudSetShowToEveryone(bool showToEveryone) {}
+function void HudSetAppearTime(int appearTime) {}
+function void HudSetStayTime(int stayTime) {}
+function void HudSetDisappearTime(int disappearTime) {}
+function void HudSetBlendStyle(int style) {}
+function void HudSetAlpha(int alpha) {}
+function void HudSetShowIn3DView(bool show) {}
+function void HudSetShowOnFullAutomap(bool show) {}
+function void HudSetShowOnOverlayAutomap(bool show) {}
+function void HudSetLayer(int layer) {}
+function void HudSetFont(str font) {}
+function void HudSetTextColor(int textColor) {}
+function void HudSetTextColorString(str textColor) {}
+function void HudSetCenterText(bool centerText) {}
+function void HudSetAlignment(int alignX, int alignY) {}
+function void HudSetAlign(int alignX, int alignY) {}
+function void HudSetAlignmentX(int alignX) {}
+function void HudSetAlignX(int alignX) {}
+function void HudSetAlignmentY(int alignY) {}
+function void HudSetAlignY(int alignY) {}
+function void HudSetTextTypeOn(bool textTypeOn) {}
+function void HudSetLogMessage(bool logMessage) {}
+function void HudSetWordWrap(bool wordWrap) {}
+function bool ACSUtils_IsYShearing(void) {}
+function void ACSUtils_HudRotate3DPoint(void) {}
+function int HudGetDistance(void) {}
+function void ACSUtils_HudDrawHudMessage(int id, int type, str text, bool isText) {}
+function void HudDrawText(int id, str text) {}
+function void HudDrawImage(int id, str image) {}

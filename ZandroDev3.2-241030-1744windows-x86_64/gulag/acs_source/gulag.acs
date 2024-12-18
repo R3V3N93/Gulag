@@ -1,0 +1,86 @@
+#nocompact
+#pragma raw include on
+
+#library "gulag"
+
+#import "zcommon.bcs"
+#import "lib/bcsutils.g.acs"
+#import "lib/log.g.acs"
+
+#include "cheats.acs"
+#include "player.acs"
+#include "gamestate.acs"
+
+strict namespace{
+
+int round = 0;
+
+Script 1 OPEN
+{
+    if(!IsNetworkGame())
+    {
+        LogError("The game is not an online game!");
+        terminate;
+    }
+
+    setGameState(GULAG_WAITING);
+    while(gamestate == GULAG_WAITING)
+    {
+        if(pready[0] == true && pready[1] == true)
+            break;
+        delay(1);
+    }
+
+    while(true)
+    {
+        round++;
+        if(round > 3)
+            break;
+        
+        for(int i = 0; i <= 1; i++)
+        {
+            if(PlayerIsDeadSpectator(i))
+            {
+                LogDebug(__SCRIPT__ + " : Revived a player \ck"..str(i));
+                SetDeadSpectator(i, false);
+            }
+        }
+
+        setGameState(GULAG_COUNTDOWN);
+        // countdown ui
+        delay(5 * 35);
+        
+        setGameState(GULAG_INPROGRESS);
+        int flagtimer = 0;
+        while(gamestate == GULAG_INPROGRESS)
+        {
+            delay(1);
+            flagtimer++;
+            if(flagtimer >= 30 * 35 && flagtimer < 1337 * 35)
+            {
+                // flag appeared ui
+                flagtimer = 1337 * 35; // There might be better ways, but I'm outta time
+                //TODO
+            }
+        }
+
+        setGameState(GULAG_MATCHOVER);
+        // who fragged someone ui
+        delay(5*35);
+    }       
+
+    // A player won! msg
+    delay(5 * 35);
+    ResetMap();
+}
+
+Script "Death" DEATH
+{
+    if(gamestate == GULAG_INPROGRESS)
+    {
+        LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c- is dead, not big surprise");
+        setGameState(GULAG_MATCHOVER);
+    }
+}
+
+}

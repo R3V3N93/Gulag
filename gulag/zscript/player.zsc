@@ -1,5 +1,6 @@
 class GulagPlayer : PlayerPawn
 {
+	GulagPlayer game;
 	Default
 	{
 		Speed 1;

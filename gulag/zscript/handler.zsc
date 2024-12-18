@@ -1,5 +1,9 @@
 class GulagHandler : EventHandler
 {
+    //
+    // GAMESTATE
+    //
+
     int gamestate;
     
     enum GULAG_GAMESTATE
@@ -14,6 +18,19 @@ class GulagHandler : EventHandler
     {
         self.gamestate = what;
     }
+
+    //
+    // GAME RELATED FUNCTIONS
+    //
+    Array<int> pready; //pready fazbear's pizza??? no way
+    void setReady(int pnum, bool set)
+    {
+        if(pnum < 0 || pnum > 1)
+    }
+
+    //
+    // OVERRIDES
+    //
 
     override void OnRegister()
     {

@@ -5,4 +5,9 @@ static GulagHandler globalHandler()
     return GulagHandler(EventHandler.Find("GulagHandler"));
 }
 
+static DebugInfo debugHandler()
+{
+    return DebugInfo(EventHandler.Find("DebugInfo"));
+}
+
 }

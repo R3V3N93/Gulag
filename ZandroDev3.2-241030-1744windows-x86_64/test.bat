@@ -1,0 +1,1 @@
+zandronum.exe -host 2 -netmode 1 -port 10666
