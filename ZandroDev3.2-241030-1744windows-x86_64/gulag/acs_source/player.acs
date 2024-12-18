@@ -3,8 +3,16 @@ strict namespace{
 bool pready[2] = {false, false};
 int score[2] = {0, 0};
 
+void giveWeapons()
+{
+    GiveInventory("Chaingun");
+    GiveInventory("Pistol");
+}
+
 Script "PlayerReady" ENTER
 {   
+    ClearInventory();
+    giveWeapons();
     while(gamestate == GULAG_WAITING)
     {
         if(KeyPressed(BT_JUMP))
