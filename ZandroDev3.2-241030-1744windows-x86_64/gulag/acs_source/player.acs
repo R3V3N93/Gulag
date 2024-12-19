@@ -10,11 +10,11 @@ struct vector3_T
     fixed z;
 };
 
-vector3_T? spawnLoc[2];
+vector3_T spawnLoc[2];
 
 internal enum { CONST_PLAYER_TID = 99900 };
 
-function bool CheckPlayerNumber(int pnum, str func)
+bool CheckPlayerNumber(int pnum, str func)
 {
     // Checks if pnum is valid playernumber
     if(pnum < 0 || pnum >= MAX_PLAYERS)
@@ -25,7 +25,7 @@ function bool CheckPlayerNumber(int pnum, str func)
     return true;
 }
 
-function int GetPlayerTid(int pnum)
+int GetPlayerTid(int pnum)
 {   
     if(!CheckPlayerNumber(pnum, __FUNCTION__))
         return -1;
@@ -33,33 +33,47 @@ function int GetPlayerTid(int pnum)
     return pnum + CONST_PLAYER_TID;
 }
 
-function int GetPlayerNumberFromTid(int tid)
+int GetPlayerNumberFromTid(int tid)
 {   
     return tid - CONST_PLAYER_TID;
 }
 
-void giveWeapons()
+void armPlayers()
 {
-    GiveInventory("Chaingun", 1);
-    GiveInventory("Pistol", 1);
+    for(int i = 0; i <= 1; i++)
+    {
+        int tid = GetPlayerTid(i);
+        ClearActorInventory(tid);
+        GiveActorInventory(tid, "Chaingun", 1);
+        GiveActorInventory(tid, "Pistol", 1);
+    }
+    LogDebug(__FUNCTION__ + " : Players were armed");
 }
 
 void scorePlayer(int pnum)
 {
-    LogDebug(__FUNCTION__ + " : Player \ck" + str(pnum) + " Scored!");
-    score[pnum]++;
+    if(gamestate == GULAG_INPROGRESS)
+    {
+        LogDebug(__FUNCTION__ + " : Player \ck" + str(pnum) + " Scored!");
+        score[pnum]++;
+        setGameState(GULAG_MATCHOVER);
+    }
+    else
+        LogWarning(__FUNCTION__ + " : Somehow I was called in the gamestate" + str(gamestate) + ". Check your code again, retard!");
 }
 
-Script "PlayerReady" ENTER
+Script "Player" ENTER
 {   
+    //LogDebug(__SCRIPT__ + " : init");
     spawnLoc[PlayerNumber()].x = GetActorX(0);
     spawnLoc[PlayerNumber()].y = GetActorY(0);
     spawnLoc[PlayerNumber()].z = GetActorZ(0);
     Thing_ChangeTID(0, GetPlayerTid(PlayerNumber()));
     ClearInventory();
-    giveWeapons();
-    while(gamestate == GULAG_WAITING)
+    while(true)
     {
+        if(gamestate == GULAG_COUNTDOWN)
+            break;
         if(KeyPressed(BT_JUMP))
         {
             if(pready[PlayerNumber()] == false)

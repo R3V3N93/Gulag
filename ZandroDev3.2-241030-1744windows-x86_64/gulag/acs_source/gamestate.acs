@@ -4,6 +4,7 @@ int gamestate;
 
 enum GAMESTATE
 {
+    GULAG_GAMESTATE_PLACEHOLDER, // zero place holder
     GULAG_WAITING,
     GULAG_COUNTDOWN,
     GULAG_INPROGRESS,
