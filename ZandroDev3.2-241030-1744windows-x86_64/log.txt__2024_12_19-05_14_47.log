@@ -1,0 +1,98 @@
+[05:14:47] Log started: log.txt__2024_12_19-05_14_47.log, Thu Dec 19 05:14:47 2024
+[05:14:47] I_Init: Setting up machine state.
+[05:14:47] CPU Speed: 2904 MHz
+[05:14:47] CPU Vendor ID: GenuineIntel
+[05:14:47]   Name: Intel(R) Core(TM) i5-9400F CPU @ 2.90GHz
+[05:14:47]   Family 6, Model 158, Stepping 13
+[05:14:47]   Features: MMX SSE SSE2 SSE3 SSSE3 SSE4.1 SSE4.2
+[05:14:47] I_InitSound: Initializing FMOD
+[05:14:47] FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2009.
+[05:14:47] Loaded FMOD version 4.44.64
+[05:14:47] VoIP controller initialized successfully.
+[05:14:48] V_Init: allocate screen.
+[05:14:48] Using in-memory database. The database will not be saved on exit.
+[05:14:48] S_Init: Setting up sound.
+[05:14:48] ST_Init: Init startup screen.
+[05:14:48] Checking cmd-line parameters...
+[05:14:48] S_InitData: Load sound definitions.
+[05:14:48] G_ParseMapInfo: Load map definitions.
+[05:14:48] Texman.Init: Init texture manager.
+[05:14:48] ParseTeamInfo: Load team definitions.
+[05:14:48] LoadActors: Load actor definitions.
+[05:14:48] R_Init: Init Doom refresh subsystem.
+[05:14:48] DecalLibrary: Load decals.
+[05:14:48] PWO_Init: Initializing preferred weapon order.
+[05:14:48] M_Init: Init menus.
+[05:14:48] P_Init: Init Playloop state.
+[05:14:48] ParseSBarInfo: Loading default status bar definition.
+[05:14:48] ParseSBarInfo: Loading custom status bar definition.
+[05:14:48] ParseScorInfo: Loading scoreboard definition.
+[05:14:48] D_CheckNetGame: Checking network game status.
+[05:14:48] player 1 of 1 (1 nodes)
+[05:14:48] Initializing network subsystem.
+[05:14:48] Winsock initialization succeeded!
+[05:14:48] IP address 125.191.50.155:10667
+[05:14:48] Z:/Projects/Gulag/ZandroDev3.2-241030-1744windows-x86_64/gulag/: Permission denied
+[05:14:48] UDP Initialized.
+[05:14:48] I_InitInput
+[05:14:48] I_StartupMouse
+[05:14:48] I_StartupKeyboard
+[05:14:48] I_StartupXInput
+[05:14:48] I_StartupRawPS2
+[05:14:48] I_StartupDirectInputJoystick
+[05:14:49] GL_VENDOR: NVIDIA Corporation
+[05:14:49] GL_RENDERER: NVIDIA GeForce RTX 2060 SUPER/PCIe/SSE2
+[05:14:49] GL_VERSION: 4.6.0 NVIDIA 566.14
+[05:14:49] GL_SHADING_LANGUAGE_VERSION: 4.60 NVIDIA
+[05:14:49] Max. texture units: 32
+[05:14:49] Max. fragment uniforms: 4096
+[05:14:49] Max. vertex uniforms: 4096
+[05:14:49] Max. varying: 124
+[05:14:49] Max. combined uniforms: 233472
+[05:14:49] Max. combined uniform blocks: 84
+[05:14:49] Support for non power 2 textures enabled.
+[05:14:49] Occlusion query enabled.
+[05:14:49] Resolution: 1920 x 1080
+[05:14:55] 
+[05:14:55] 
+[05:14:55] 
+[05:14:55] MAP01 - entryway
+[05:14:55] 
+[05:14:57] 20:14:55 - error: The game is not an online game!
+[05:14:58] Chubbs entered the game.
+[05:14:58] Chubbs joined the game.
+[05:15:00] Chubbs: Man, this level looks pretty big...
+[05:15:09] 20:15:08 - debug: setGameState() : gamestate has been set to 0
+[05:15:09] Chubbs: All this running... it's like gym class all over again!!
+[05:15:14] 20:15:14 - debug: PlayerReady : Player 0 Ready
+[05:15:18] ]pukename forceready 1
+[05:15:18] 20:15:18 - debug: setGameState() : gamestate has been set to 1
+[05:15:18] 20:15:18 - debug: ForceReady : Forced Player 1 Ready
+[05:15:20] Chubbs: Hey, you guys wanna go get something to eat after this?
+[05:15:23] 20:15:23 - debug: setGameState() : gamestate has been set to 2
+[05:15:27] Chubbs: Man, I wish this level was smaller so I didn't have to run so much.
+[05:15:29] Chubbs was mowed down by Player's chaingun.
+[05:15:29] 20:15:29 - debug: setGameState() : gamestate has been set to 3
+[05:15:29] 20:15:29 - debug: scoreplayer : Player 1 Scored!
+[05:15:29] 20:15:29 - debug: Death : Player 1 is dead, not big surprise
+[05:17:31] 20:17:31 - debug: setGameState() : gamestate has been set to 1
+[05:17:33] Chubbs: Do you think Crash would go out with me?
+[05:17:37] 20:17:37 - debug: setGameState() : gamestate has been set to 2
+[05:17:39] Chubbs: Hey, you guys wanna go get something to eat after this?
+[05:17:43] Chubbs was mowed down by Player's chaingun.
+[05:17:43] 20:17:43 - debug: setGameState() : gamestate has been set to 3
+[05:17:43] 20:17:43 - debug: scoreplayer : Player 1 Scored!
+[05:17:43] 20:17:43 - debug: Death : Player 1 is dead, not big surprise
+[05:17:48] 20:17:48 - debug: setGameState() : gamestate has been set to 1
+[05:17:53] 20:17:53 - debug: setGameState() : gamestate has been set to 2
+[05:17:54] Chubbs: Hey, you guys wanna go get something to eat after this?
+[05:17:58] Chubbs was mowed down by Player's chaingun.
+[05:17:58] 20:17:58 - debug: setGameState() : gamestate has been set to 3
+[05:17:58] 20:17:58 - debug: scoreplayer : Player 1 Scored!
+[05:17:58] 20:17:58 - debug: Death : Player 1 is dead, not big surprise
+[05:18:06] 20:18:06 - debug: 1 : Game ended, restarting the map
+[05:18:06] 20:18:06 - debug: 1 : Player 0 Won
+[05:22:47] Chubbs: Man, this suit is chafing my legs.
+[05:22:49] 20:22:49 - debug: setGameState() : gamestate has been set to 0
+[05:22:50] VoIP controller shutting down.
+[05:22:50] VoIP controller shutting down.

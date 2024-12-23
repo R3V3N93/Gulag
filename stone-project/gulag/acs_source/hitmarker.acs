@@ -2,17 +2,19 @@ strict namespace{
 
 Script "Hitmarker" (void) ClientSide
 {
-    SetActivatorToTarget(0);
+    LogDebug(__SCRIPT__ + " : hitmarker online");
+    SetActivator(0, AAPTR_TARGET);
     if(PlayerNumber() == -1)
     {
-        LogError(__SCRIPT__ " : hitmarker was hit but doesn't have owner");
+        LogError(__SCRIPT__ + " : hitmarker was hit but doesn't have owner");
         terminate;
     }
     if(PlayerNumber() != ConsolePlayerNumber())
         terminate;
     
-    SetFont("graphics/hitmarker.png");
-
+    SetFont("hitmark");
+    SetHudSize(900, 675, false);
+    HudMessage(s:"A"; HUDMSG_FADEOUT, 1000, CR_UNTRANSLATED, 450.0, 337.0, 0.08, 0.08, 0.9);
 }
 
 }

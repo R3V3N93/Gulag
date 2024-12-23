@@ -1,0 +1,1 @@
+zandronum.exe -host 2 -netmode 1 -file gulag gulag.wad -private -useip 192.168.0.17 +sv_fdm_showdebugmessages true

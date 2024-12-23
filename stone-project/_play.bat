@@ -1,1 +1,1 @@
-zandronum.exe +logfile log.txt
+zandronum.exe -file gulag +logfile log.txt

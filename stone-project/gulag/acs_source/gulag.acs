@@ -12,6 +12,7 @@
 #include "gamestate.acs"
 #include "hudmsg.acs"
 #include "hud.acs"
+#include "hitmarker.acs"
 
 strict namespace{
 
