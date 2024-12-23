@@ -7,9 +7,9 @@ Script "HUD" ENTER CLIENTSIDE
 
     while(true)
     {
-        if(GetSyncVar(20000) != GULAG_WAITING)
+        if(GetSyncVar(20000) != GULAG_WAITING && GetSyncVar(20000) != 0) // 0 is placeholder mostly
         {
-            HUDMSGPlain("Round\n" + str(round) + "\n(" + str(3-round) + " rounds to go)", 160.4, 20.0, 100);
+            HUDMSGPlain("Round\n" + str(round) + "\n(" + str(3-round) + " r ounds to go)", 160.4, 20.0, 100);
             HUDMSGPlain("Player 1\n" + str(score[0]), 10.5, 20.0, 101);
             HUDMSGPlain("Player 2\n" + str(score[1]), 310.6, 20.0, 102);
         }

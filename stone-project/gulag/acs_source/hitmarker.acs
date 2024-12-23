@@ -1,0 +1,18 @@
+strict namespace{
+
+Script "Hitmarker" (void) ClientSide
+{
+    SetActivatorToTarget(0);
+    if(PlayerNumber() == -1)
+    {
+        LogError(__SCRIPT__ " : hitmarker was hit but doesn't have owner");
+        terminate;
+    }
+    if(PlayerNumber() != ConsolePlayerNumber())
+        terminate;
+    
+    SetFont("graphics/hitmarker.png");
+
+}
+
+}
