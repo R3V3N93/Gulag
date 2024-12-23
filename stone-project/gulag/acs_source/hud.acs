@@ -2,13 +2,22 @@ strict namespace{
 
 Script "HUD" ENTER CLIENTSIDE
 {
+    if(ConsolePlayerNumber() != PlayerNumber())
+        terminate;
+
     while(true)
     {
-        if(gamestate != GULAG_WAITING)
+        if(GetSyncVar(20000) != GULAG_WAITING)
         {
-            HUDMSGPlain("Round\n" + str(round), 160.5, 20.0, 100);
+            HUDMSGPlain("Round\n" + str(round) + "\n(" + str(3-round) + " rounds to go)", 160.4, 20.0, 100);
             HUDMSGPlain("Player 1\n" + str(score[0]), 10.5, 20.0, 101);
             HUDMSGPlain("Player 2\n" + str(score[1]), 310.6, 20.0, 102);
+        }
+        else
+        {
+            ClearHudMessage(100);
+            ClearHudMessage(101);
+            ClearHudMessage(102);
         }
         delay(1);
     }

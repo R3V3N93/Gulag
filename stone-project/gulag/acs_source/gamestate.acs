@@ -15,6 +15,7 @@ void setGameState(int what)
 {
     LogDebug("setGameState() : \ckgamestate\c- has been set to \ck" + str(what) + "\c-");
     gamestate = what;
+    SyncVariable(20000, gamestate);
 }
 
 }
