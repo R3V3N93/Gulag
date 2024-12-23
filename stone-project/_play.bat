@@ -1,0 +1,1 @@
+zandronum.exe +logfile log.txt

@@ -1,0 +1,114 @@
+strict namespace{
+
+bool pready[2] = {false, false};
+int score[2] = {0, 0};
+
+struct vector3_T
+{
+    fixed x;
+    fixed y;
+    fixed z;
+};
+
+vector3_T spawnLoc[2];
+fixed initAngle[2];
+
+internal enum { CONST_PLAYER_TID = 99900 };
+
+bool CheckPlayerNumber(int pnum, str func)
+{
+    // Checks if pnum is valid playernumber
+    if(pnum < 0 || pnum >= MAX_PLAYERS)
+    {
+        LogError(__FUNCTION__ + " : Called from " + func + " : pnum " + str(pnum) + " is not a valid playernumber! Returning false.");
+        return false;
+    }
+    return true;
+}
+
+int GetPlayerTid(int pnum)
+{   
+    if(!CheckPlayerNumber(pnum, __FUNCTION__))
+        return -1;
+
+    return pnum + CONST_PLAYER_TID;
+}
+
+int GetPlayerNumberFromTid(int tid)
+{   
+    return tid - CONST_PLAYER_TID;
+}
+
+void armPlayers()
+{
+    for(int i = 0; i <= 1; i++)
+    {
+        int tid = GetPlayerTid(i);
+        ClearActorInventory(tid);
+        GiveActorInventory(tid, "M1Garand", 1);
+        GiveActorInventory(tid, "M1911", 1);
+        SetActorSpeed(tid, 0.6);
+    }
+    LogDebug(__FUNCTION__ + " : Players were armed");
+}
+
+void scorePlayer(int pnum)
+{
+    if(gamestate == GULAG_INPROGRESS)
+    {
+        LogDebug(__FUNCTION__ + " : Player \ck" + str(pnum) + " Scored!");  
+        HUDMSGPlain("Player \ck" + str(pnum + 1) + " Scored!", 160.0, 120.0);
+        score[pnum]++;
+        setGameState(GULAG_MATCHOVER);
+    }
+    else
+        LogWarning(__FUNCTION__ + " : Somehow I was called in the gamestate" + str(gamestate) + ". Check your code again, retard!");
+}
+
+Script "Player" ENTER
+{   
+    //LogDebug(__SCRIPT__ + " : init");
+    spawnLoc[PlayerNumber()].x = GetActorX(0);
+    spawnLoc[PlayerNumber()].y = GetActorY(0);
+    spawnLoc[PlayerNumber()].z = GetActorZ(0);
+    initAngle[PlayerNumber()] = GetActorAngle(0);
+
+    if(spawnLoc[PlayerNumber()].x == 0.0)
+        LogError(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c-'s spawn point's \ckX\c- coord is not set properly!");
+    if(spawnLoc[PlayerNumber()].y == 0.0)
+        LogError(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c-'s spawn point's \ckY\c- coord is not set properly!");
+    if(spawnLoc[PlayerNumber()].z == 0.0)
+        LogError(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c-'s spawn point's \ckZ\c- coord is not set properly!");
+
+
+    Thing_ChangeTID(0, GetPlayerTid(PlayerNumber()));
+    ClearInventory();
+    while(true)
+    {
+        if(gamestate == GULAG_COUNTDOWN)
+            break;
+        if(KeyPressed(BT_JUMP))
+        {
+            if(pready[PlayerNumber()] == false)
+            {
+                LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + " Ready");
+                pready[PlayerNumber()] = true;
+            }
+            else
+            {
+                LogDebug(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + " Unready");
+                pready[PlayerNumber()] = false;
+            }
+        }
+        delay(1);
+    }
+}
+
+
+Script "Respawn" RESPAWN
+{
+    Thing_ChangeTID(0, GetPlayerTid(PlayerNumber()));
+    SetPlayerProperty(0, on, PROP_FROZEN);
+}
+
+}

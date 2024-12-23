@@ -1,0 +1,78 @@
+type = "Doom Builder Map Settings Configuration";
+gameconfig = "gulag.cfg";
+strictpatches = 0;
+
+maps
+{
+	
+	MAP01
+	{
+		defaultwalltexture = "-NOFLAT-";
+		overridemiddletexture = false;
+		defaultceiltexture = "-NOFLAT-";
+		overrideceiltexture = false;
+		custombrightness = 196;
+		scriptcompiler = "zandronum_acs.cfg";
+		
+		resources
+		{
+		}
+		viewpositiony = 806.4818f;
+		viewpositionx = 624.0561f;
+		
+		testprecommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		customceilheight = 128;
+		customfloorheight = 0;
+		
+		grid
+		{
+			backoffsetx = 0;
+			backsource = 0;
+			gridoriginy = 0;
+			backscaley = 100;
+			gridrotate = 0;
+			backscalex = 100;
+			gridoriginx = 0;
+			gridsize = 32;
+			background = "";
+			backoffsety = 0;
+		}
+		viewscale = 0.01f;
+		
+		reloadresourceprecommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		defaulttoptexture = "-NOFLAT-";
+		overridebottomtexture = false;
+		defaultbottomtexture = "-NOFLAT-";
+		defaultfloortexture = "-NOFLAT-";
+		overrideceilheight = false;
+		overridebrightness = false;
+		
+		testpostcommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		overridefloorheight = false;
+		overridetoptexture = false;
+		uselongtexturenames = false;
+		overridefloortexture = false;
+		
+		reloadresourcepostcommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+	}
+}

@@ -1,0 +1,21 @@
+strict namespace {
+
+internal void HUDMSGSetting(fixed size = 1.0)
+{
+    SetFont("ANOFONT");
+    SetHUDSize(int(320.0 / size), int(240.0 / size), false);    
+}
+
+void HUDMSGPlain(str text, fixed posx, fixed posy, int id = 1, fixed size = 1.0, fixed alpha = 1.0)
+{
+    HUDMSGSetting(size);  
+    HudMessageBold(s:text; HUDMSG_PLAIN, id, CR_UNTRANSLATED, posx, posy, 0.0, alpha);
+}
+
+void HUDMSGFadeout(str text, fixed posx, fixed posy, int id = 1, fixed size = 1.0, fixed alpha = 1.0, fixed staytime = 1.0, fixed fadetime = 1.0)
+{
+    HUDMSGSetting(size);  
+    HudMessageBold(s:text; HUDMSG_FADEOUT, id, CR_UNTRANSLATED, posx, posy, staytime, fadetime, alpha);
+}
+
+}

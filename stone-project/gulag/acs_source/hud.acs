@@ -1,0 +1,16 @@
+strict namespace{
+
+Script "HUD" ENTER CLIENTSIDE
+{
+    while(true)
+    {
+        if(gamestate != GULAG_WAITING)
+        {
+            HUDMSGPlain("Round\n" + str(round), 160.5, 20.0, 100);
+            HUDMSGPlain("Player 1\n" + str(score[0]), 10.5, 20.0, 101);
+            HUDMSGPlain("Player 2\n" + str(score[1]), 310.6, 20.0, 102);
+        }
+        delay(1);
+    }
+}
+}

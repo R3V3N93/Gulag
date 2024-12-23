@@ -1,0 +1,153 @@
+#nocompact
+#pragma raw include on
+
+#library "gulag"
+
+#import "zcommon.bcs"
+#import "lib/bcsutils.g.acs"
+#import "lib/log.g.acs"
+
+#include "cheats.acs"
+#include "player.acs"
+#include "gamestate.acs"
+#include "hudmsg.acs"
+#include "hud.acs"
+
+strict namespace{
+
+int round = 0;
+
+void prepBuff(bool set)
+{
+    LogDebug(__FUNCTION__ + " : Bros are \ck" + (set == true ? "buffed omgggg" : "weak mfs rn"));
+    int on = (set == true ? 1 : 0);
+    SetPlayerProperty(1, on, PROP_INVULNERABILITY);
+    SetPlayerProperty(1, on, PROP_FROZEN);
+}
+
+void returnToStartPoint()
+{
+    for(int i = 0; i <= 1; i++)
+    {
+        if(!SetActorPosition(GetPlayerTid(i), spawnLoc[i].x, spawnLoc[i].y, 10.0, false))
+        {
+            LogError(__FUNCTION__ + " : SetActorPosition() for \ckPlayer " + str(i) + "\c- not done successfully!");
+            return;
+        }
+        SetActorAngle(GetPlayerTid(i), initAngle[i]);
+    }
+    LogDebug(__FUNCTION__ + " : Players returned to starting point successfully!");
+}
+
+Script 1 OPEN
+{
+    if(GameType() == GAME_SINGLE_PLAYER)
+    {
+        LogWarning("The game is not in multiplayer!");
+        terminate;
+    }
+
+    if(GetGamemodeState() == GAMESTATE_WAITFORPLAYERS)
+    {
+        HUDMSGPlain("Waiting for players", 160.0, 120.0);
+        terminate;
+    }
+
+    //SetGameplaySetting("sv_duelcountdowntime", 0);
+    while(true)
+    {
+        if(GetGamemodeState() == GAMESTATE_INPROGRESS)
+            break;
+
+        delay(1);
+    }
+        
+    prepBuff(true);
+
+    //
+    // Waiting
+    //
+
+    setGameState(GULAG_WAITING);
+
+    while(gamestate == GULAG_WAITING)
+    {
+        if(pready[0] == true && pready[1] == true)
+            break;
+        HUDMSGPlain("Press SPACEBAR to \ckReady", 160.0, 30.0);
+        HUDMSGPlain("Player 1 : " + (pready[0] == true ? "Ready" : "Not Ready"), 160.0, 120.0, 2);  
+        HUDMSGPlain("Player 2 : " + (pready[1] == true ? "Ready" : "Not Ready"), 160.0, 150.0, 3);  
+        delay(1);
+    }
+
+    ClearHudMessageBold(1);
+    ClearHudMessageBold(2);
+    ClearHudMessageBold(3);
+
+    while(true)
+    {
+        round++;
+        if(round > 3)
+            break; 
+
+        //
+        // Countdown
+        //
+
+        ClearHudMessageBold(1);
+
+        armPlayers();
+        prepBuff(true);
+        returnToStartPoint();
+        setGameState(GULAG_COUNTDOWN);
+        for(int i = 0; i < 5; i++)
+        {
+            HUDMSGPlain(str(5-i), 160.0, 120.0);
+            delay(35);
+        }// countdown ui
+
+        HUDMSGFadeout("Fight!", 160.0, 120.0, 1, 1.0, 1.0, 0.7, 0.5);
+
+        //
+        // In progress
+        //
+        
+        setGameState(GULAG_INPROGRESS);
+        prepBuff(false);
+        int flagtimer = 0;
+        while(gamestate == GULAG_INPROGRESS)
+        {
+            delay(1);
+            flagtimer++;
+            if(flagtimer >= 30 * 35 && flagtimer < 1337 * 35)
+            {
+                // flag appeared ui
+                // Spawn flag
+                flagtimer = 1337 * 35; // There might be better ways, but I'm outta time
+            }
+        }
+        prepBuff(true);
+        
+        delay(5*35);
+    }       
+
+    //
+    // Post game
+    //
+
+    int winner = (score[0] > score[1] ? 0 : 1);
+
+    // A player won! msg
+    LogDebug(__SCRIPT__ + " : \ckPlayer " + str(winner) + "\c- Won");
+    HUDMSGPlain("\ckPlayer " + str(winner + 1) + "\c- Won", 160.0, 120.0);
+    LogDebug(__SCRIPT__ + " : Game ended, restarting the map");
+    delay(5 * 35);
+    ResetMap();
+}
+
+Script "Death" DEATH
+{
+    scorePlayer((PlayerNumber() == 0 ? 1 : 0));
+}
+
+}

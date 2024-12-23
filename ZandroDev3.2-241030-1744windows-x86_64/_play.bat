@@ -1,1 +1,0 @@
-zandronum.exe -file gulag gulag.wad +logfile log.txt
