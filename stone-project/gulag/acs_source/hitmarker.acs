@@ -13,8 +13,8 @@ Script "Hitmarker" (void) ClientSide
         terminate;
     
     SetFont("hitmark");
-    SetHudSize(900, 675, false);
-    HudMessage(s:"A"; HUDMSG_FADEOUT, 1000, CR_UNTRANSLATED, 450.0, 337.0, 0.08, 0.08, 0.9);
+    SetHudSize(1350, 1012, false);
+    HudMessage(s:"A"; HUDMSG_FADEOUT, 1000, CR_UNTRANSLATED, 675.0, 506.0, 0.02, 0.08, 0.9);
 }
 
 }

@@ -13,6 +13,7 @@
 #include "hudmsg.acs"
 #include "hud.acs"
 #include "hitmarker.acs"
+#include "map.acs"
 
 strict namespace{
 
@@ -24,20 +25,6 @@ void prepBuff(bool set)
     int on = (set == true ? 1 : 0);
     SetPlayerProperty(1, on, PROP_INVULNERABILITY);
     SetPlayerProperty(1, on, PROP_FROZEN);
-}
-
-void returnToStartPoint()
-{
-    for(int i = 0; i <= 1; i++)
-    {
-        if(!SetActorPosition(GetPlayerTid(i), spawnLoc[i].x, spawnLoc[i].y, 10.0, false))
-        {
-            LogError(__FUNCTION__ + " : SetActorPosition() for \ckPlayer " + str(i) + "\c- not done successfully!");
-            return;
-        }
-        SetActorAngle(GetPlayerTid(i), initAngle[i]);
-    }
-    LogDebug(__FUNCTION__ + " : Players returned to starting point successfully!");
 }
 
 Script 1 OPEN
@@ -54,7 +41,8 @@ Script 1 OPEN
         terminate;
     }
 
-    //SetGameplaySetting("sv_duelcountdowntime", 0);
+    setupStartPoint();
+
     while(true)
     {
         if(GetGamemodeState() == GAMESTATE_INPROGRESS)
@@ -70,6 +58,7 @@ Script 1 OPEN
     //
 
     setGameState(GULAG_WAITING);
+    returnToStartPoint();
 
     while(gamestate == GULAG_WAITING)
     {

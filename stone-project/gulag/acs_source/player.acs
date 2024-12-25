@@ -3,16 +3,6 @@ strict namespace{
 bool pready[2] = {false, false};
 int score[2] = {0, 0};
 
-struct vector3_T
-{
-    fixed x;
-    fixed y;
-    fixed z;
-};
-
-vector3_T spawnLoc[2];
-fixed initAngle[2];
-
 internal enum { CONST_PLAYER_TID = 99900 };
 
 bool CheckPlayerNumber(int pnum, str func)
@@ -48,6 +38,12 @@ void armPlayers()
         GiveActorInventory(tid, "M1Garand", 1);
         GiveActorInventory(tid, "M1911", 1);
         SetActorSpeed(tid, 0.6);
+
+        if(!CheckActorInventory(tid, "M1Garand"))
+            LogError(__FUNCTION__ + " : \ckPlayer " + str(i) + " \c-was not given \ck" + "M1Garand");
+        if(!CheckActorInventory(tid, "M1911"))
+            LogError(__FUNCTION__ + " : \ckPlayer " + str(i) + " \c-was not given \ck" + "M1911");
+        
     }
     LogDebug(__FUNCTION__ + " : Players were armed");
 }
@@ -68,19 +64,8 @@ void scorePlayer(int pnum)
 Script "Player" ENTER
 {   
     //LogDebug(__SCRIPT__ + " : init");
-    spawnLoc[PlayerNumber()].x = GetActorX(0);
-    spawnLoc[PlayerNumber()].y = GetActorY(0);
-    spawnLoc[PlayerNumber()].z = GetActorZ(0);
-    initAngle[PlayerNumber()] = GetActorAngle(0);
-
-    if(spawnLoc[PlayerNumber()].x == 0.0)
-        LogError(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c-'s spawn point's \ckX\c- coord is not set properly!");
-    if(spawnLoc[PlayerNumber()].y == 0.0)
-        LogError(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c-'s spawn point's \ckY\c- coord is not set properly!");
-    if(spawnLoc[PlayerNumber()].z == 0.0)
-        LogError(__SCRIPT__ + " : Player \ck" + str(PlayerNumber()) + "\c-'s spawn point's \ckZ\c- coord is not set properly!");
-
-
+    
+    FadeRange(0, 0, 0, 1.0, 0, 0, 0, 1.0, 0.0);
     Thing_ChangeTID(0, GetPlayerTid(PlayerNumber()));
     ClearInventory();
     while(true)
@@ -102,6 +87,8 @@ Script "Player" ENTER
         }
         delay(1);
     }
+
+    FadeRange(0, 0, 0, 1.0, 0, 0, 0, 0.0, 0.0);
 }
 
 

@@ -1,0 +1,49 @@
+strict namespace {
+
+struct vector4_T
+{
+    fixed x;
+    fixed y;
+    fixed z;
+    fixed angle;
+};
+
+vector4_T spawnLoc[4];
+int map;
+
+enum GULAGMAPS
+{
+    GULAG_MAP_WAREHOUSE,
+    GULAG_MAP_BOUNTY
+};
+
+void returnToStartPoint()
+{
+    for(int i = 0; i <= 1; i++)
+    {
+        int mapConst = (map == GULAG_MAP_WAREHOUSE ? 0 : 2);
+        if(!SetActorPosition(GetPlayerTid(i), spawnLoc[i + mapConst].x, spawnLoc[i + mapConst].y, 10.0, false))
+        {
+            LogError(__FUNCTION__ + " : SetActorPosition() for \ckPlayer " + str(i) + "\c- not done successfully!");
+            return;
+        }
+        SetActorAngle(GetPlayerTid(i), spawnLoc[i + mapConst].angle);
+    }
+    LogDebug(__FUNCTION__ + " : Players returned to starting point successfully!");
+}
+
+void setupStartPoint()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        int tid = 10000 + i;
+        spawnLoc[i].x = GetActorX(tid);
+        spawnLoc[i].y = GetActorY(tid);
+        spawnLoc[i].z = GetActorZ(tid);
+        spawnLoc[i].angle = GetActorAngle(tid);
+    }
+    map = random(GULAG_MAP_WAREHOUSE, GULAG_MAP_BOUNTY);
+    LogDebug(__FUNCTION__ + " : Starting point setup complete.");
+}
+
+}
