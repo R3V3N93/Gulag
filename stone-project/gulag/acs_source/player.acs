@@ -52,7 +52,12 @@ void scorePlayer(int pnum)
 {
     if(gamestate == GULAG_INPROGRESS)
     {
-        LogDebug(__FUNCTION__ + " : Player \ck" + str(pnum) + " Scored!");  
+        LogDebug(__FUNCTION__ + " : Player \ck" + str(pnum) + " Scored!"); 
+        if(pnum == 0) 
+            AmbientSound("loxin_player1_scored", 128);
+        else
+            AmbientSound("loxin_player2_scored", 128);
+            
         HUDMSGPlain("Player \ck" + str(pnum + 1) + " Scored!", 160.0, 120.0);
         score[pnum]++;
         setGameState(GULAG_MATCHOVER);
