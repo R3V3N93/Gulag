@@ -1,6 +1,6 @@
 strict namespace{
 
-Script "Hitmarker" (void) ClientSide
+Script "Hitmarker" (void)
 {
     LogDebug(__SCRIPT__ + " : hitmarker online");
     SetActivator(0, AAPTR_TARGET);
@@ -9,6 +9,11 @@ Script "Hitmarker" (void) ClientSide
         LogError(__SCRIPT__ + " : hitmarker was hit but doesn't have owner");
         terminate;
     }
+    NamedExecuteClientScript("HitmarkerClient", PlayerNumber()); 
+}
+
+Script "HitmarkerClient" (void) ClientSide
+{
     if(PlayerNumber() != ConsolePlayerNumber())
         terminate;
     
