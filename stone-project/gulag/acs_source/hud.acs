@@ -7,6 +7,11 @@ Script "HUD" ENTER CLIENTSIDE
 
     while(true)
     {
+        gamestate = GetSyncVar(20000);
+        round = GetSyncVar(20001);
+
+        score[0] = GetSyncVar(20003);
+        score[1] = GetSyncVar(20004);
         if(GetSyncVar(20000) != GULAG_WAITING && GetSyncVar(20000) != 0 && round <= 3) // 0 is placeholder mostly
         {
             HUDMSGPlain("Round\n" + str(round) + "\n(" + str(3-round) + " rounds to go)", 160.4, 30.0, 100);
